@@ -122,3 +122,7 @@ export async function chatAction(messages: { role: "user" | "model", content: st
     return { success: false, error: "Failed to fetch response." };
   }
 }
+
+export async function getMapsApiKey() {
+  return process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || process.env.NEXT_PUBLIC_MAPS_API_KEY || process.env.MAPS_API_KEY || "";
+}

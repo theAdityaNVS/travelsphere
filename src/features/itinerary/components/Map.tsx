@@ -8,13 +8,20 @@ interface MapExperienceProps {
   plan?: TravelPlanResponse;
 }
 
+import { useEffect, useState } from "react";
+import { getMapsApiKey } from "../actions";
+
 export default function MapExperience({ destination, plan }: MapExperienceProps) {
-  const apiKey = process.env.NEXT_PUBLIC_MAPS_API_KEY || process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
+  const [apiKey, setApiKey] = useState<string>("");
+
+  useEffect(() => {
+    getMapsApiKey().then(key => setApiKey(key)).catch(console.error);
+  }, []);
 
   if (!apiKey) {
     return (
       <div className="w-full h-[500px] bg-muted rounded-3xl flex items-center justify-center text-muted-foreground border border-border">
-        Google Maps API key missing
+        Loading Map...
       </div>
     );
   }
