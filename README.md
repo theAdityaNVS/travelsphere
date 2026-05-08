@@ -39,8 +39,21 @@ graph TD;
 - **Cloud Logging:** Distributed observability.
 
 ## 📦 Deployment
+
+### Option 1: Google Cloud Run (Containerized)
 1. Build the Docker container: `docker build -t travelsphere .`
 2. Deploy to Cloud Run: `gcloud run deploy travelsphere --image travelsphere --platform managed`
+
+### Option 2: Vercel (Edge-Optimized)
+1. Push to GitHub and connect to Vercel.
+2. Configure Environment Variables (Gemini, Firebase, Maps).
+3. Automatic deployment on every push.
+
+## 🔑 API & Service Preparation
+Ensure the following are configured:
+- **Gemini API:** API Key from Google AI Studio or Vertex AI enabled.
+- **Google Maps Platform:** Enable Maps JS, Places, and Routes APIs.
+- **Firebase:** Firestore and Auth initialized in your GCP project.
 
 ## 📚 Technical Documentation
 For detailed step-by-step guides on how this project was built and configured, please refer to the following:
