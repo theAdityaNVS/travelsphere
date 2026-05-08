@@ -3,7 +3,7 @@
 import { chatAssistant, generateItinerary } from "./gemini";
 import { TravelPlanRequestSchema, TravelPlanResponse } from "./types";
 import { z } from "zod";
-import { adminDb } from "../../lib/db/admin";
+import { adminDb } from "@/lib/firebase/admin";
 
 export async function generateItineraryAction(prevState: unknown, formData: FormData): Promise<{ success: boolean; data?: TravelPlanResponse; error?: string; destination?: string; tripId?: string }> {
   try {

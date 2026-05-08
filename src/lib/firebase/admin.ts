@@ -19,15 +19,29 @@ if (!admin.apps.length) {
 
 const adminDb = new Proxy({} as FirebaseFirestore.Firestore, {
   get: (target, prop) => {
-    if (!admin.apps.length) return undefined;
-    return admin.firestore()[prop as keyof FirebaseFirestore.Firestore];
+    if (!admin.apps.length) {
+      throw new Error("Firebase Admin is not initialized. Check your environment variables.");
+    }
+    const firestore = admin.firestore();
+    const value = firestore[prop as keyof FirebaseFirestore.Firestore];
+    if (typeof value === "function") {
+      return value.bind(firestore);
+    }
+    return value;
   }
 });
 
 const adminAuth = new Proxy({} as admin.auth.Auth, {
   get: (target, prop) => {
-    if (!admin.apps.length) return undefined;
-    return admin.auth()[prop as keyof admin.auth.Auth];
+    if (!admin.apps.length) {
+      throw new Error("Firebase Admin is not initialized. Check your environment variables.");
+    }
+    const auth = admin.auth();
+    const value = auth[prop as keyof admin.auth.Auth];
+    if (typeof value === "function") {
+      return value.bind(auth);
+    }
+    return value;
   }
 });
 

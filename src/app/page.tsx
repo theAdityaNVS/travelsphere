@@ -72,7 +72,7 @@ export default function Home() {
       </section>
 
       {/* Showcase Section */}
-      {!plan && <ShowcaseTrips />}
+      {!plan && <ShowcaseTrips onSelect={handleExampleSelect} />}
 
       {/* Results Section */}
       {plan && destination && (

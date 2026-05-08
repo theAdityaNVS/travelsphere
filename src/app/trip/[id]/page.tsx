@@ -1,4 +1,4 @@
-import { adminDb } from "@/lib/db/admin";
+import { adminDb } from "@/lib/firebase/admin";
 import Itinerary from "@/features/itinerary/components/Itinerary";
 import Map from "@/features/itinerary/components/Map";
 import Chat from "@/features/itinerary/components/Chat";
