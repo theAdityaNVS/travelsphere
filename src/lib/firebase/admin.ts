@@ -45,4 +45,6 @@ const adminAuth = new Proxy({} as admin.auth.Auth, {
   }
 });
 
+export const isFirebaseAdminInitialized = () => admin.apps.length > 0;
+
 export { adminDb, adminAuth };

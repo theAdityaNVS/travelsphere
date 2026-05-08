@@ -1,6 +1,6 @@
 "use client";
 
-import { APIProvider, Map } from "@vis.gl/react-google-maps";
+import { APIProvider, Map, AdvancedMarker, Pin } from "@vis.gl/react-google-maps";
 import { TravelPlanResponse } from "../types";
 
 interface MapExperienceProps {
@@ -13,10 +13,32 @@ import { getMapsApiKey } from "../actions";
 
 export default function MapExperience({ destination, plan }: MapExperienceProps) {
   const [apiKey, setApiKey] = useState<string>("");
+  const [center, setCenter] = useState({ lat: 0, lng: 0 });
+  const [zoom, setZoom] = useState(3);
+  const [markerCoords, setMarkerCoords] = useState<{lat: number, lng: number} | null>(null);
 
   useEffect(() => {
     getMapsApiKey().then(key => setApiKey(key)).catch(console.error);
   }, []);
+
+  useEffect(() => {
+    if (!apiKey || !destination) return;
+    
+    let isMounted = true;
+    fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(destination)}&key=${apiKey}`)
+      .then(res => res.json())
+      .then(data => {
+        if (data.results && data.results.length > 0 && isMounted) {
+          const location = data.results[0].geometry.location;
+          setCenter(location);
+          setMarkerCoords(location);
+          setZoom(10);
+        }
+      })
+      .catch(console.error);
+      
+    return () => { isMounted = false; };
+  }, [apiKey, destination]);
 
   if (!apiKey) {
     return (
@@ -30,15 +52,19 @@ export default function MapExperience({ destination, plan }: MapExperienceProps)
     <APIProvider apiKey={apiKey}>
       <div className="w-full h-[300px] rounded-3xl overflow-hidden shadow-xl border border-border relative group">
         <Map
-          defaultCenter={{ lat: 0, lng: 0 }}
-          defaultZoom={3}
+          center={center}
+          zoom={zoom}
+          onCenterChanged={(ev) => setCenter(ev.detail.center)}
+          onZoomChanged={(ev) => setZoom(ev.detail.zoom)}
           gestureHandling={"greedy"}
           disableDefaultUI={true}
           mapId="bf50a913160a24f0" // Optional: custom styled map id
         >
-          {/* We would normally geocode the destination and activities here. 
-              For this demo, we'll show a placeholder message or just the map of the area.
-              Real implementation would use a geocoding service. */}
+          {markerCoords && (
+            <AdvancedMarker position={markerCoords}>
+              <Pin background={"#FF385C"} borderColor={"#FF385C"} glyphColor={"#fff"} />
+            </AdvancedMarker>
+          )}
         </Map>
         
         <div className="absolute bottom-4 left-4 right-4 bg-card/90 backdrop-blur-md p-4 rounded-2xl border border-border shadow-lg">

@@ -38,8 +38,8 @@ export function WeatherVisualization({ weather }: WeatherProps) {
       </div>
       
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 relative z-10">
-        <div className="flex items-center gap-4">
-          <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center">
+        <div className="flex flex-col md:flex-row items-start md:items-center gap-4">
+          <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center shrink-0">
             {getIcon(weather.summary)}
           </div>
           <div>
@@ -52,12 +52,13 @@ export function WeatherVisualization({ weather }: WeatherProps) {
         </div>
 
         {weather.forecast && (
-          <div className="flex gap-4 overflow-x-auto pb-2 md:pb-0">
+          <div className="flex gap-4 overflow-x-auto pb-4 md:pb-2 pt-2">
             {weather.forecast.map((f, i) => (
-              <div key={i} className="flex flex-col items-center min-w-[60px] p-2 rounded-xl bg-muted/50">
+              <div key={i} className="flex flex-col items-center min-w-[80px] p-3 rounded-xl bg-muted/50 shrink-0">
                 <span className="text-[10px] font-bold uppercase opacity-50 mb-1">Day {f.day}</span>
                 {getIcon(f.condition)}
-                <span className="text-xs font-bold mt-1">{f.temp}</span>
+                <span className="text-[11px] text-center font-medium mt-2 leading-tight">{f.condition}</span>
+                <span className="text-sm font-bold mt-1">{f.temp}</span>
               </div>
             ))}
           </div>

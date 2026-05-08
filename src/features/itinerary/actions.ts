@@ -3,7 +3,7 @@
 import { chatAssistant, generateItinerary } from "./gemini";
 import { TravelPlanRequestSchema, TravelPlanResponse } from "./types";
 import { z } from "zod";
-import { adminDb } from "@/lib/firebase/admin";
+import { adminDb, isFirebaseAdminInitialized } from "@/lib/firebase/admin";
 
 export async function generateItineraryAction(prevState: unknown, formData: FormData): Promise<{ success: boolean; data?: TravelPlanResponse; error?: string; destination?: string; tripId?: string }> {
   try {
@@ -31,12 +31,14 @@ export async function generateItineraryAction(prevState: unknown, formData: Form
     // Save to Firestore using Admin SDK for persistence / collaborative planning
     let tripId = undefined;
     try {
-      const docRef = await adminDb.collection("trips").add({
-        ...validatedData,
-        plan,
-        createdAt: new Date(),
-      });
-      tripId = docRef.id;
+      if (isFirebaseAdminInitialized()) {
+        const docRef = await adminDb.collection("trips").add({
+          ...validatedData,
+          plan,
+          createdAt: new Date(),
+        });
+        tripId = docRef.id;
+      }
     } catch (dbErr) {
       console.error("Failed to save trip to DB", dbErr);
       // We don't fail the action if DB save fails to keep it resilient
