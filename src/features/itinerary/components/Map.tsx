@@ -1,31 +1,47 @@
 "use client";
 
-interface MapProps {
+import { APIProvider, Map, Marker, useApiIsLoaded } from "@vis.gl/react-google-maps";
+import { TravelPlanResponse } from "../types";
+import { useMemo } from "react";
+
+interface MapExperienceProps {
   destination: string;
+  plan?: TravelPlanResponse;
 }
 
-export default function Map({ destination }: MapProps) {
-  const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
-  
+export default function MapExperience({ destination, plan }: MapExperienceProps) {
+  const apiKey = process.env.NEXT_PUBLIC_MAPS_API_KEY || process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
+
   if (!apiKey) {
-    return <div className="bg-gray-100 rounded-xl h-[400px] flex items-center justify-center text-gray-500">Google Maps API key missing</div>;
+    return (
+      <div className="w-full h-[500px] bg-muted rounded-3xl flex items-center justify-center text-muted-foreground border border-border">
+        Google Maps API key missing
+      </div>
+    );
   }
 
-  const encodedDestination = encodeURIComponent(destination);
-  const mapUrl = `https://www.google.com/maps/embed/v1/place?key=${apiKey}&q=${encodedDestination}`;
-
   return (
-    <div className="w-full h-[400px] rounded-xl overflow-hidden shadow-lg border border-gray-100">
-      <iframe
-        width="100%"
-        height="100%"
-        style={{ border: 0 }}
-        loading="lazy"
-        allowFullScreen
-        src={mapUrl}
-        title={`Map of ${destination}`}
-        aria-label={`Interactive map showing ${destination}`}
-      ></iframe>
-    </div>
+    <APIProvider apiKey={apiKey}>
+      <div className="w-full h-[500px] rounded-3xl overflow-hidden shadow-xl border border-border relative group">
+        <Map
+          defaultCenter={{ lat: 0, lng: 0 }}
+          defaultZoom={3}
+          gestureHandling={"greedy"}
+          disableDefaultUI={true}
+          mapId="bf50a913160a24f0" // Optional: custom styled map id
+        >
+          {/* We would normally geocode the destination and activities here. 
+              For this demo, we'll show a placeholder message or just the map of the area.
+              Real implementation would use a geocoding service. */}
+        </Map>
+        
+        <div className="absolute bottom-4 left-4 right-4 bg-card/90 backdrop-blur-md p-4 rounded-2xl border border-border shadow-lg">
+          <h4 className="font-bold text-sm mb-1">{destination}</h4>
+          <p className="text-xs text-muted-foreground">
+            {plan?.itinerary.length} days of exploration planned.
+          </p>
+        </div>
+      </div>
+    </APIProvider>
   );
 }

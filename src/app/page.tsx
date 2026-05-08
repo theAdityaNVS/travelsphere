@@ -82,7 +82,7 @@ export default function Home() {
             </div>
             <div className="lg:col-span-5 space-y-8">
               <div className="sticky top-24 space-y-8">
-                <Map destination={destination} />
+                <Map destination={destination} plan={plan} />
                 <Chat />
               </div>
             </div>
