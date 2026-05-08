@@ -2,8 +2,22 @@
 
 import { Cloud, CloudRain, CloudSun, Sun, Thermometer, Wind } from "lucide-react";
 
+interface WeatherData {
+  summary: string;
+  temperature: {
+    low: string;
+    high: string;
+  };
+  forecast?: Array<{
+    day: number;
+    condition: string;
+    temp: string;
+  }>;
+  recommendations: string;
+}
+
 interface WeatherProps {
-  weather: any;
+  weather: WeatherData | string | undefined;
 }
 
 export function WeatherVisualization({ weather }: WeatherProps) {
@@ -39,7 +53,7 @@ export function WeatherVisualization({ weather }: WeatherProps) {
 
         {weather.forecast && (
           <div className="flex gap-4 overflow-x-auto pb-2 md:pb-0">
-            {weather.forecast.map((f: any, i: number) => (
+            {weather.forecast.map((f, i) => (
               <div key={i} className="flex flex-col items-center min-w-[60px] p-2 rounded-xl bg-muted/50">
                 <span className="text-[10px] font-bold uppercase opacity-50 mb-1">Day {f.day}</span>
                 {getIcon(f.condition)}

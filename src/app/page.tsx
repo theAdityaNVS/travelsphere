@@ -12,6 +12,7 @@ import { AnimatedBackground } from "@/components/AnimatedBackground";
 
 import { ExampleSuggestions, TravelExample } from "@/components/ExampleSuggestions";
 
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { ShowcaseTrips } from "@/components/ShowcaseTrips";
 
 export default function Home() {

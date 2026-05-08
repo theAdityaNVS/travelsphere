@@ -1,8 +1,7 @@
 "use client";
 
-import { APIProvider, Map, Marker, useApiIsLoaded } from "@vis.gl/react-google-maps";
+import { APIProvider, Map } from "@vis.gl/react-google-maps";
 import { TravelPlanResponse } from "../types";
-import { useMemo } from "react";
 
 interface MapExperienceProps {
   destination: string;

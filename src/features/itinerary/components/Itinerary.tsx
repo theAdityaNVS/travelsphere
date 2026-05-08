@@ -1,6 +1,6 @@
 "use client";
 
-import { CheckCircle2, MapPin, Copy, Check, Info, Sparkles, DollarSign, Accessibility } from "lucide-react";
+import { CheckCircle2, Copy, Check, Sparkles, DollarSign, Accessibility } from "lucide-react";
 import { useState } from "react";
 import { TravelPlanResponse } from "../types";
 import { formatItineraryToMarkdown } from "../utils";
@@ -20,9 +20,11 @@ export default function Itinerary({ plan }: ItineraryProps) {
     setTimeout(() => setCopied(false), 2000);
   };
 
+  return (
+    <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
       <div className="relative h-64 md:h-96 rounded-3xl overflow-hidden mb-8 shadow-xl">
         <img 
-          src={`https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1200&auto=format&fit=crop`} // Fallback or dynamic
+          src={`https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1200&auto=format&fit=crop`}
           alt={plan.itinerary[0]?.theme || "Destination"}
           className="w-full h-full object-cover"
         />
@@ -63,12 +65,10 @@ export default function Itinerary({ plan }: ItineraryProps) {
       <div className="space-y-12 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-border before:to-transparent">
         {plan.itinerary.map((day) => (
           <div key={day.day} className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
-            {/* Icon */}
             <div className="flex items-center justify-center w-10 h-10 rounded-full border border-border bg-card text-primary font-bold shadow-sm z-10 shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2">
               {day.day}
             </div>
             
-            {/* Content */}
             <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-6 rounded-3xl bg-card border border-border shadow-sm group-hover:shadow-md transition-shadow">
               <div className="flex items-center justify-between mb-4">
                 <h3 className="text-xl font-bold">{day.theme}</h3>

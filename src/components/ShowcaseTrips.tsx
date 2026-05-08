@@ -3,7 +3,6 @@
 import { motion } from "framer-motion";
 import { MapPin, Calendar, Star } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
 
 const SHOWCASE_TRIPS = [
   {
@@ -62,10 +61,11 @@ export function ShowcaseTrips() {
               className="group cursor-pointer"
             >
               <div className="relative aspect-[4/5] rounded-3xl overflow-hidden mb-6 shadow-xl shadow-primary/5 transition-transform duration-500 group-hover:scale-[1.02]">
-                <img
+                <Image
                   src={trip.image}
                   alt={trip.title}
-                  className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-110"
+                  fill
+                  className="object-cover transition-transform duration-700 group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity" />
                 <div className="absolute top-4 right-4">
