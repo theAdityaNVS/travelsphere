@@ -12,6 +12,8 @@ import { AnimatedBackground } from "@/components/AnimatedBackground";
 
 import { ExampleSuggestions, TravelExample } from "@/components/ExampleSuggestions";
 
+import { ShowcaseTrips } from "@/components/ShowcaseTrips";
+
 export default function Home() {
   const [plan, setPlan] = useState<TravelPlanResponse | null>(null);
   const [destination, setDestination] = useState<string>("");
@@ -67,6 +69,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Showcase Section */}
+      {!plan && <ShowcaseTrips />}
 
       {/* Results Section */}
       {plan && destination && (
