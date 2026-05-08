@@ -1,4 +1,4 @@
-import { adminDb } from "@/lib/firebase/admin";
+import { adminDb, isFirebaseAdminInitialized } from "@/lib/firebase/admin";
 import Itinerary from "@/features/itinerary/components/Itinerary";
 import Map from "@/features/itinerary/components/Map";
 import Chat from "@/features/itinerary/components/Chat";
@@ -13,6 +13,12 @@ export const dynamic = "force-dynamic";
 
 export default async function TripPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
+
+  // Guard: if Firebase is not configured, redirect to home gracefully
+  if (!isFirebaseAdminInitialized()) {
+    notFound();
+  }
+
   const doc = await adminDb.collection("trips").doc(id).get();
   
   if (!doc.exists) {

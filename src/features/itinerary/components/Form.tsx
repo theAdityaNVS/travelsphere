@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useEffect, useState } from "react";
+import { useActionState, useEffect, useRef, useState } from "react";
 import { Compass, Calendar, DollarSign, Loader2, Globe, Accessibility } from "lucide-react";
 import { generateItineraryAction } from "../actions";
 import { TravelPlanResponse } from "../types";
@@ -15,6 +15,8 @@ interface FormProps {
     budget: string;
     style: string;
   };
+  onLoadingChange?: (loading: boolean) => void;
+  autoSubmit?: boolean;
 }
 
 function SubmitButton() {
@@ -23,38 +25,62 @@ function SubmitButton() {
     <button
       type="submit"
       disabled={pending}
+      id="generate-btn"
       className="w-full bg-primary hover:bg-primary/90 text-white font-semibold py-4 px-6 rounded-xl transition-all active:scale-[0.98] flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed shadow-lg shadow-primary/20"
     >
       {pending ? (
         <>
           <Loader2 className="w-5 h-5 animate-spin" />
-          Crafting your journey...
+          Crafting your journey…
         </>
       ) : (
-        "Generate Itinerary"
+        "✨ Generate Itinerary"
       )}
     </button>
   );
 }
 
-export default function Form({ onPlanGenerated, initialValues }: FormProps) {
-  const [state, formAction] = useActionState(generateItineraryAction, { success: false });
+export default function Form({ onPlanGenerated, initialValues, onLoadingChange, autoSubmit }: FormProps) {
+  const [state, formAction, isPending] = useActionState(generateItineraryAction, { success: false });
   const router = useRouter();
-  
-  // Controlled inputs for programmatic updates
+  const formRef = useRef<HTMLFormElement>(null);
+
+  // Controlled inputs
   const [destination, setDestination] = useState("");
   const [duration, setDuration] = useState(3);
   const [budget, setBudget] = useState("moderate");
   const [style, setStyle] = useState("Adventure");
 
+  // Track the last submitted example key so we only auto-submit once per unique selection
+  const lastAutoSubmitKey = useRef<string>("");
+
+  // Sync loading state to parent
   useEffect(() => {
-    if (initialValues) {
-      setDestination(initialValues.destination);
-      setDuration(initialValues.duration);
-      setBudget(initialValues.budget);
-      setStyle(initialValues.style);
-    }
-  }, [initialValues]);
+    onLoadingChange?.(isPending);
+  }, [isPending, onLoadingChange]);
+
+  // Apply initialValues + trigger auto-submit atomically
+  useEffect(() => {
+    if (!initialValues) return;
+
+    const key = `${initialValues.destination}|${initialValues.duration}|${initialValues.budget}|${initialValues.style}`;
+
+    // Update form fields
+    setDestination(initialValues.destination);
+    setDuration(initialValues.duration);
+    setBudget(initialValues.budget);
+    setStyle(initialValues.style);
+
+    if (!autoSubmit || lastAutoSubmitKey.current === key) return;
+    lastAutoSubmitKey.current = key;
+
+    // Wait a tick for React state to flush to the DOM, then submit
+    const timer = setTimeout(() => {
+      formRef.current?.requestSubmit();
+    }, 200);
+    return () => clearTimeout(timer);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initialValues, autoSubmit]);
 
   useEffect(() => {
     if (state.success && state.data && state.destination) {
@@ -67,7 +93,7 @@ export default function Form({ onPlanGenerated, initialValues }: FormProps) {
   }, [state, onPlanGenerated, router]);
 
   return (
-    <form action={formAction} className="bg-card p-8 rounded-3xl shadow-2xl shadow-primary/5 border border-border">
+    <form ref={formRef} action={formAction} className="bg-card p-8 rounded-3xl shadow-2xl shadow-primary/5 border border-border">
       <div className="space-y-6">
         <div>
           <label htmlFor="destination" className="block text-sm font-semibold text-foreground mb-2">
@@ -188,11 +214,11 @@ export default function Form({ onPlanGenerated, initialValues }: FormProps) {
           <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
             {["Adventure", "Relaxation", "Culture", "Food", "Family", "Romantic"].map((s) => (
               <label key={s} className="cursor-pointer">
-                <input 
-                  type="radio" 
-                  name="style" 
-                  value={s} 
-                  className="peer sr-only" 
+                <input
+                  type="radio"
+                  name="style"
+                  value={s}
+                  className="peer sr-only"
                   checked={style === s}
                   onChange={(e) => setStyle(e.target.value)}
                 />
