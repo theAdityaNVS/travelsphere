@@ -5,9 +5,9 @@ export function middleware(request: NextRequest) {
   const nonce = Buffer.from(crypto.randomUUID()).toString('base64');
   const cspHeader = `
     default-src 'self';
-    script-src 'self' 'nonce-${nonce}' 'strict-dynamic' https: http: 'unsafe-inline' 'unsafe-eval';
+    script-src 'self' 'unsafe-inline' 'unsafe-eval' https: http:;
     style-src 'self' 'unsafe-inline';
-    img-src 'self' blob: data: https://images.unsplash.com https://maps.googleapis.com https://maps.gstatic.com;
+    img-src 'self' blob: data: https://images.unsplash.com https://maps.googleapis.com https://maps.gstatic.com https://www.transparenttextures.com;
     font-src 'self';
     object-src 'none';
     base-uri 'self';
@@ -32,7 +32,7 @@ export function middleware(request: NextRequest) {
       headers: requestHeaders,
     },
   });
-  
+
   // Apply security headers to response
   response.headers.set(
     'Content-Security-Policy',
