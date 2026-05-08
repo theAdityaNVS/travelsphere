@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+
 import { CheckCircle2, Copy, Check, Sparkles, DollarSign, Accessibility, Sunrise, Sunset, Utensils, Navigation } from "lucide-react";
 import { useState, useCallback, useEffect } from "react";
 import { TravelPlanResponse } from "../types";
@@ -60,10 +62,13 @@ export default function Itinerary({ plan }: ItineraryProps) {
         animate={{ opacity: 1, y: 0 }}
         className="relative h-72 md:h-[400px] rounded-[2.5rem] overflow-hidden mb-8 shadow-2xl"
       >
-        <img 
-          src={`https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1200&auto=format&fit=crop`}
+        <Image 
+          src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1200&auto=format&fit=crop"
           alt={plan.itinerary[0]?.theme || "Destination"}
-          className="w-full h-full object-cover transition-transform duration-1000 hover:scale-105"
+          fill
+          priority
+          sizes="(max-width: 768px) 100vw, 1200px"
+          className="object-cover transition-transform duration-1000 hover:scale-105"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
         <div className="absolute bottom-10 left-8 right-8 text-white">
