@@ -34,12 +34,26 @@ export const ActivitySchema = z.object({
 });
 export type Activity = z.infer<typeof ActivitySchema>;
 
+export const WeatherSchema = z.object({
+  summary: z.string(),
+  temperature: z.object({
+    low: z.string(),
+    high: z.string(),
+  }),
+  forecast: z.array(z.object({
+    day: z.number(),
+    condition: z.string(),
+    temp: z.string(),
+  })).optional(),
+  recommendations: z.string(),
+});
+
 export const TravelPlanResponseSchema = z.object({
   itinerary: z.array(ActivitySchema),
   food: z.array(z.string()).optional().default([]),
   tips: z.array(z.string()).optional().default([]),
   packing: z.array(z.string()).optional().default([]),
-  weather: z.string().optional().default(""),
+  weather: z.union([z.string(), WeatherSchema]).optional(),
   totalEstimatedCost: z.string().optional(),
 });
 export type TravelPlanResponse = z.infer<typeof TravelPlanResponseSchema>;

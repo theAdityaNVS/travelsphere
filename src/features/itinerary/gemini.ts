@@ -36,7 +36,14 @@ Format your response strictly as a JSON object with the following structure:
   "food": ["Local dish 1", "Restaurant 2"],
   "tips": ["Tip 1", "Tip 2"],
   "packing": ["Item 1", "Item 2"],
-  "weather": "Brief weather description for the typical season.",
+  "weather": {
+    "summary": "Brief weather description for the typical season.",
+    "temperature": { "low": "15°C", "high": "22°C" },
+    "forecast": [
+      { "day": 1, "condition": "Sunny", "temp": "20°C" }
+    ],
+    "recommendations": "Specific advice based on weather (e.g., bring an umbrella)."
+  },
   "totalEstimatedCost": "$500"
 }
 
