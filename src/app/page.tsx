@@ -8,7 +8,7 @@ import Chat from "@/features/itinerary/components/Chat";
 import { Plane } from "lucide-react";
 import { TravelPlanResponse } from "@/features/itinerary/types";
 
-import { ThemeToggle } from "@/components/ThemeToggle";
+import { AnimatedBackground } from "@/components/AnimatedBackground";
 
 export default function Home() {
   const [plan, setPlan] = useState<TravelPlanResponse | null>(null);
@@ -27,7 +27,7 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-background text-foreground selection:bg-indigo-100 selection:text-indigo-900 transition-colors duration-300">
       {/* Header */}
-      <header className="bg-card border-b border-border sticky top-0 z-50 backdrop-blur-md bg-opacity-80">
+      <header className="bg-card/80 border-b border-border sticky top-0 z-50 backdrop-blur-md">
         <div className="max-w-5xl mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-white">
@@ -40,21 +40,15 @@ export default function Home() {
       </header>
 
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-white border-b border-gray-100">
-        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-[0.03]"></div>
-        <div className="absolute top-0 right-0 -translate-y-12 translate-x-1/3">
-          <div className="w-96 h-96 bg-emerald-100/40 rounded-full blur-3xl"></div>
-        </div>
-        <div className="absolute bottom-0 left-0 translate-y-1/3 -translate-x-1/3">
-          <div className="w-96 h-96 bg-indigo-100/40 rounded-full blur-3xl"></div>
-        </div>
+      <section className="relative overflow-hidden bg-background border-b border-border">
+        <AnimatedBackground />
 
-        <div className="max-w-5xl mx-auto px-4 py-20 md:py-28 relative z-10">
-          <div className="text-center max-w-2xl mx-auto">
-            <h2 className="text-4xl md:text-6xl font-extrabold text-gray-900 tracking-tight mb-6 leading-tight">
-              Design your perfect trip in <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-emerald-500">seconds.</span>
+        <div className="max-w-5xl mx-auto px-4 py-20 md:py-32 relative z-10">
+          <div className="text-center max-w-3xl mx-auto">
+            <h2 className="text-4xl md:text-7xl font-extrabold tracking-tight mb-8 leading-[1.1]">
+              Design your perfect trip in <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-emerald-500 to-cyan-500">seconds.</span>
             </h2>
-            <p className="text-lg md:text-xl text-gray-600 mb-10 leading-relaxed">
+            <p className="text-lg md:text-2xl text-muted-foreground mb-12 leading-relaxed">
               Tell us where you want to go, and our AI will craft a personalized itinerary, complete with food recommendations and local secrets.
             </p>
           </div>
