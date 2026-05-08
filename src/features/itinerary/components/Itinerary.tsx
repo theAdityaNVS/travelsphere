@@ -20,8 +20,23 @@ export default function Itinerary({ plan }: ItineraryProps) {
     setTimeout(() => setCopied(false), 2000);
   };
 
-  return (
-    <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
+      <div className="relative h-64 md:h-96 rounded-3xl overflow-hidden mb-8 shadow-xl">
+        <img 
+          src={`https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1200&auto=format&fit=crop`} // Fallback or dynamic
+          alt={plan.itinerary[0]?.theme || "Destination"}
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+        <div className="absolute bottom-8 left-8 right-8 text-white">
+          <span className="bg-primary px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-3 inline-block">
+            {plan.itinerary.length} Day Journey
+          </span>
+          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight">
+            Discover {plan.itinerary[0]?.theme.split(" ")[plan.itinerary[0]?.theme.split(" ").length - 1] || "the World"}
+          </h1>
+        </div>
+      </div>
+
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-3xl font-bold tracking-tight mb-1 flex items-center gap-2">
