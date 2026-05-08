@@ -8,6 +8,8 @@ import Chat from "@/features/itinerary/components/Chat";
 import { Plane } from "lucide-react";
 import { TravelPlanResponse } from "@/features/itinerary/types";
 
+import { ThemeToggle } from "@/components/ThemeToggle";
+
 export default function Home() {
   const [plan, setPlan] = useState<TravelPlanResponse | null>(null);
   const [destination, setDestination] = useState<string>("");
@@ -23,14 +25,17 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen bg-slate-50 selection:bg-indigo-100 selection:text-indigo-900">
+    <main className="min-h-screen bg-background text-foreground selection:bg-indigo-100 selection:text-indigo-900 transition-colors duration-300">
       {/* Header */}
-      <header className="bg-white border-b border-gray-100 sticky top-0 z-10">
-        <div className="max-w-5xl mx-auto px-4 h-16 flex items-center gap-2">
-          <div className="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center text-white">
-            <Plane className="w-5 h-5" />
+      <header className="bg-card border-b border-border sticky top-0 z-50 backdrop-blur-md bg-opacity-80">
+        <div className="max-w-5xl mx-auto px-4 h-16 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-white">
+              <Plane className="w-5 h-5" />
+            </div>
+            <h1 className="text-xl font-bold tracking-tight">TravelSphere AI</h1>
           </div>
-          <h1 className="text-xl font-bold text-gray-900 tracking-tight">TravelSphere AI</h1>
+          <ThemeToggle />
         </div>
       </header>
 
