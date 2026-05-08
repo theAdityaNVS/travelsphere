@@ -10,9 +10,12 @@ import { TravelPlanResponse } from "@/features/itinerary/types";
 
 import { AnimatedBackground } from "@/components/AnimatedBackground";
 
+import { ExampleSuggestions, TravelExample } from "@/components/ExampleSuggestions";
+
 export default function Home() {
   const [plan, setPlan] = useState<TravelPlanResponse | null>(null);
   const [destination, setDestination] = useState<string>("");
+  const [selectedExample, setSelectedExample] = useState<TravelExample | undefined>();
 
   const handlePlanGenerated = (newPlan: TravelPlanResponse, dest: string) => {
     setPlan(newPlan);
@@ -22,6 +25,11 @@ export default function Home() {
     setTimeout(() => {
       document.getElementById("results")?.scrollIntoView({ behavior: "smooth" });
     }, 100);
+  };
+
+  const handleExampleSelect = (example: TravelExample) => {
+    setSelectedExample(example);
+    // Smooth scroll to form if needed
   };
 
   return (
@@ -54,7 +62,8 @@ export default function Home() {
           </div>
           
           <div className="max-w-xl mx-auto">
-            <Form onPlanGenerated={handlePlanGenerated} />
+            <ExampleSuggestions onSelect={handleExampleSelect} />
+            <Form onPlanGenerated={handlePlanGenerated} initialValues={selectedExample} />
           </div>
         </div>
       </section>
