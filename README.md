@@ -42,6 +42,17 @@ graph TD;
 1. Build the Docker container: `docker build -t travelsphere .`
 2. Deploy to Cloud Run: `gcloud run deploy travelsphere --image travelsphere --platform managed`
 
+## 📚 Technical Documentation
+For detailed step-by-step guides on how this project was built and configured, please refer to the following:
+- [00: Project Manifesto & Architecture](./docs/00-project-manifesto.md)
+- [01: Frontend & UI Design](./docs/01-frontend.md)
+- [02: Backend & Gemini AI](./docs/02-backend-ai.md)
+- [03: Docker & Containerization](./docs/03-docker.md)
+- [04: Firebase & Data Infrastructure](./docs/04-firebase.md)
+- [05: Google Cloud Setup & Deployment](./docs/05-gcloud-setup.md)
+- [06: Security & Performance](./docs/06-security-performance.md)
+
+
 ## 🔒 Security Posture
 - Strict Content Security Policy (CSP).
 - Input sanitization via Zod.
