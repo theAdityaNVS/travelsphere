@@ -9,7 +9,7 @@ export const logger = {
     if (env.NODE_ENV === 'development') {
       console.log(`[INFO] ${message}`, metadata || '');
     } else {
-      const entry = log.entry({ severity: 'INFO', ...metadata }, message);
+      const entry = log.entry({ severity: 'INFO' }, { message, ...metadata });
       log.write(entry).catch(console.error);
     }
   },
@@ -17,7 +17,7 @@ export const logger = {
     if (env.NODE_ENV === 'development') {
       console.error(`[ERROR] ${message}`, error || '');
     } else {
-      const entry = log.entry({ severity: 'ERROR', error }, message);
+      const entry = log.entry({ severity: 'ERROR' }, { message, error: error instanceof Error ? { message: error.message, stack: error.stack } : String(error) });
       log.write(entry).catch(console.error);
     }
   },
@@ -25,7 +25,7 @@ export const logger = {
     if (env.NODE_ENV === 'development') {
       console.warn(`[WARN] ${message}`, metadata || '');
     } else {
-      const entry = log.entry({ severity: 'WARNING', ...metadata }, message);
+      const entry = log.entry({ severity: 'WARNING' }, { message, ...metadata });
       log.write(entry).catch(console.error);
     }
   }

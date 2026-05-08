@@ -1,10 +1,11 @@
 "use client";
 
 import { useActionState, useEffect } from "react";
-import { Compass, Calendar, DollarSign, Loader2 } from "lucide-react";
+import { Compass, Calendar, DollarSign, Loader2, Globe, Accessibility } from "lucide-react";
 import { generateItineraryAction } from "../actions";
 import { TravelPlanResponse } from "../types";
 import { useFormStatus } from "react-dom";
+import { useRouter } from "next/navigation";
 
 interface FormProps {
   onPlanGenerated: (plan: TravelPlanResponse, dest: string) => void;
@@ -32,12 +33,17 @@ function SubmitButton() {
 
 export default function Form({ onPlanGenerated }: FormProps) {
   const [state, formAction] = useActionState(generateItineraryAction, { success: false });
+  const router = useRouter();
 
   useEffect(() => {
     if (state.success && state.data && state.destination) {
-      onPlanGenerated(state.data, state.destination);
+      if (state.tripId) {
+        router.push(`/trip/${state.tripId}`);
+      } else {
+        onPlanGenerated(state.data, state.destination);
+      }
     }
-  }, [state, onPlanGenerated]);
+  }, [state, onPlanGenerated, router]);
 
   return (
     <form action={formAction} className="bg-white p-8 rounded-3xl shadow-xl shadow-indigo-100/50 border border-indigo-50">
@@ -110,12 +116,51 @@ export default function Form({ onPlanGenerated }: FormProps) {
           </div>
         </div>
 
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label htmlFor="language" className="block text-sm font-semibold text-gray-700 mb-2">
+              Language
+            </label>
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <Globe className="h-5 w-5 text-gray-400" />
+              </div>
+              <select
+                name="language"
+                id="language"
+                className="block w-full pl-10 pr-8 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-shadow outline-none text-gray-900 appearance-none bg-white"
+              >
+                <option value="English">English</option>
+                <option value="Spanish">Español</option>
+                <option value="French">Français</option>
+                <option value="German">Deutsch</option>
+                <option value="Japanese">日本語</option>
+                <option value="Mandarin">中文</option>
+              </select>
+            </div>
+          </div>
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
+              <Accessibility className="w-4 h-4 text-gray-500" />
+              Accessibility Needs
+            </label>
+            <div className="grid grid-cols-2 gap-2 mt-2">
+              {["Wheelchair", "Visual", "Hearing", "Cognitive"].map((acc) => (
+                <label key={acc} className="flex items-center gap-2 text-sm text-gray-700 cursor-pointer">
+                  <input type="checkbox" name="accessibility" value={acc} className="rounded text-indigo-600 focus:ring-indigo-500" />
+                  {acc}
+                </label>
+              ))}
+            </div>
+          </div>
+        </div>
+
         <div>
           <label className="block text-sm font-semibold text-gray-700 mb-3">
             Travel Style
           </label>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-            {["Adventure", "Relaxation", "Culture", "Food"].map((style) => (
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+            {["Adventure", "Relaxation", "Culture", "Food", "Family", "Romantic"].map((style) => (
               <label key={style} className="cursor-pointer">
                 <input type="radio" name="style" value={style} className="peer sr-only" defaultChecked={style === "Adventure"} />
                 <div className="text-center px-4 py-3 border border-gray-200 rounded-xl peer-checked:bg-indigo-50 peer-checked:border-indigo-500 peer-checked:text-indigo-700 hover:bg-gray-50 transition-colors font-medium text-gray-600 text-sm">

@@ -5,6 +5,10 @@ export function formatItineraryToMarkdown(plan: TravelPlanResponse | null): stri
   
   let markdown = `# Travel Itinerary\n\n`;
   
+  if (plan.totalEstimatedCost) {
+    markdown += `**Estimated Total Cost**: ${plan.totalEstimatedCost}\n\n`;
+  }
+
   if (plan.weather) {
     markdown += `## Weather\n${plan.weather}\n\n`;
   }
@@ -13,8 +17,11 @@ export function formatItineraryToMarkdown(plan: TravelPlanResponse | null): stri
     markdown += `## Itinerary\n\n`;
     plan.itinerary.forEach((day) => {
       markdown += `### Day ${day.day}: ${day.theme}\n`;
-      day.activities.forEach((activity: string) => {
-        markdown += `- ${activity}\n`;
+      day.activities.forEach((activity) => {
+        markdown += `- **${activity.name}** (${activity.estimatedCost}): ${activity.description}\n`;
+        if (activity.accessibilityNotes) {
+           markdown += `  *Accessibility*: ${activity.accessibilityNotes}\n`;
+        }
       });
       markdown += `\n`;
     });

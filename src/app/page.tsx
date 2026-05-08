@@ -4,6 +4,7 @@ import { useState } from "react";
 import Form from "@/features/itinerary/components/Form";
 import Itinerary from "@/features/itinerary/components/Itinerary";
 import Map from "@/features/itinerary/components/Map";
+import Chat from "@/features/itinerary/components/Chat";
 import { Plane } from "lucide-react";
 import { TravelPlanResponse } from "@/features/itinerary/types";
 
@@ -66,9 +67,10 @@ export default function Home() {
             <div className="lg:col-span-7">
               <Itinerary plan={plan} />
             </div>
-            <div className="lg:col-span-5">
-              <div className="sticky top-24">
+            <div className="lg:col-span-5 space-y-8">
+              <div className="sticky top-24 space-y-8">
                 <Map destination={destination} />
+                <Chat />
               </div>
             </div>
           </div>
