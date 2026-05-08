@@ -7,7 +7,7 @@ export function middleware(request: NextRequest) {
     default-src 'self';
     script-src 'self' 'nonce-${nonce}' 'strict-dynamic' https: http: 'unsafe-inline' 'unsafe-eval';
     style-src 'self' 'unsafe-inline';
-    img-src 'self' blob: data: https://maps.googleapis.com https://maps.gstatic.com;
+    img-src 'self' blob: data: https://images.unsplash.com https://maps.googleapis.com https://maps.gstatic.com;
     font-src 'self';
     object-src 'none';
     base-uri 'self';

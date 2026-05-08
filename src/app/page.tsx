@@ -64,7 +64,7 @@ export default function Home() {
             </p>
           </div>
           
-          <div className="max-w-xl mx-auto">
+          <div className="max-w-2xl mx-auto">
             <ExampleSuggestions onSelect={handleExampleSelect} />
             <Form onPlanGenerated={handlePlanGenerated} initialValues={selectedExample} />
           </div>
@@ -92,8 +92,8 @@ export default function Home() {
       )}
       
       {/* Footer */}
-      <footer className="bg-white border-t border-gray-100 py-8 mt-auto">
-        <div className="max-w-5xl mx-auto px-4 text-center text-gray-500 text-sm">
+      <footer className="bg-card/80 border-t border-border py-8 mt-auto">
+        <div className="max-w-5xl mx-auto px-4 text-center text-muted-foreground text-sm">
           Built for the PromptWars 2026 Hackathon. 
         </div>
       </footer>

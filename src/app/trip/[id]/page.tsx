@@ -25,7 +25,7 @@ export default async function TripPage({ params }: { params: Promise<{ id: strin
 
   return (
     <main className="min-h-screen bg-background text-foreground selection:bg-indigo-100 selection:text-indigo-900 transition-colors duration-300">
-      <header className="bg-card border-b border-border sticky top-0 z-50 backdrop-blur-md bg-opacity-80">
+      <header className="bg-card/80 border-b border-border sticky top-0 z-50 backdrop-blur-md">
         <div className="max-w-5xl mx-auto px-4 h-16 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
             <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-white">
@@ -34,7 +34,7 @@ export default async function TripPage({ params }: { params: Promise<{ id: strin
             <h1 className="text-xl font-bold tracking-tight">TravelSphere AI</h1>
           </Link>
           <div className="flex items-center gap-4">
-            <Link href="/" className="text-sm font-medium text-primary hover:text-indigo-700">Create New Trip</Link>
+            <Link href="/" className="text-sm font-medium text-primary hover:text-primary/80 transition-colors">Create New Trip</Link>
             <ThemeToggle />
           </div>
         </div>
@@ -43,8 +43,8 @@ export default async function TripPage({ params }: { params: Promise<{ id: strin
       <section id="results" className="max-w-5xl mx-auto px-4 py-16 md:py-24">
         <div className="mb-8 flex items-center justify-between">
           <div>
-            <h2 className="text-3xl font-bold text-gray-900">Your Trip to {destination}</h2>
-            <p className="text-gray-500 mt-2">Share this URL with your friends to plan together!</p>
+            <h2 className="text-3xl font-bold text-foreground">Your Trip to {destination}</h2>
+            <p className="text-muted-foreground mt-2">Share this URL with your friends to plan together!</p>
           </div>
         </div>
         <div className="grid lg:grid-cols-12 gap-10">
@@ -60,8 +60,8 @@ export default async function TripPage({ params }: { params: Promise<{ id: strin
         </div>
       </section>
       
-      <footer className="bg-white border-t border-gray-100 py-8 mt-auto">
-        <div className="max-w-5xl mx-auto px-4 text-center text-gray-500 text-sm">
+      <footer className="bg-card/80 border-t border-border py-8 mt-auto">
+        <div className="max-w-5xl mx-auto px-4 text-center text-muted-foreground text-sm">
           Built for the PromptWars 2026 Hackathon. 
         </div>
       </footer>

@@ -20,7 +20,7 @@ export default function MapExperience({ destination, plan }: MapExperienceProps)
 
   if (!apiKey) {
     return (
-      <div className="w-full h-[500px] bg-muted rounded-3xl flex items-center justify-center text-muted-foreground border border-border">
+      <div className="w-full h-[300px] bg-muted rounded-3xl flex items-center justify-center text-muted-foreground border border-border">
         Loading Map...
       </div>
     );
@@ -28,7 +28,7 @@ export default function MapExperience({ destination, plan }: MapExperienceProps)
 
   return (
     <APIProvider apiKey={apiKey}>
-      <div className="w-full h-[500px] rounded-3xl overflow-hidden shadow-xl border border-border relative group">
+      <div className="w-full h-[300px] rounded-3xl overflow-hidden shadow-xl border border-border relative group">
         <Map
           defaultCenter={{ lat: 0, lng: 0 }}
           defaultZoom={3}

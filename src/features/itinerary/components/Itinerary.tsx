@@ -117,11 +117,11 @@ export default function Itinerary({ plan }: ItineraryProps) {
       {/* Itinerary Carousel */}
       <div className="relative pt-4">
         <div className="overflow-hidden rounded-3xl" ref={emblaRef}>
-          <div className="flex touch-pan-y">
+          <div className="flex touch-pan-y -ml-3">
             {plan.itinerary.map((day, index) => (
               <div 
                 key={day.day} 
-                className="flex-[0_0_100%] min-w-0 pl-4 pr-4 md:flex-[0_0_80%] lg:flex-[0_0_70%]"
+                className="flex-[0_0_100%] min-w-0 px-3 md:flex-[0_0_85%] lg:flex-[0_0_75%]"
               >
                 <motion.div 
                   initial={{ opacity: 0, scale: 0.95 }}
@@ -154,7 +154,7 @@ export default function Itinerary({ plan }: ItineraryProps) {
                           <div className="w-2 h-2 rounded-full bg-primary" />
                         </div>
                         <div className="bg-background/50 hover:bg-background/80 transition-colors p-4 rounded-2xl border border-border/50">
-                          <div className="flex justify-between items-start mb-2 gap-4">
+                          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-2 gap-2">
                             <h4 className="font-bold text-lg text-foreground leading-tight">{activity.name}</h4>
                             <span className="shrink-0 inline-flex items-center justify-center px-2.5 py-1 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 text-xs font-bold">
                               {activity.estimatedCost}

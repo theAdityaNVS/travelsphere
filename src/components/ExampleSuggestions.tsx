@@ -26,9 +26,9 @@ interface ExampleSuggestionsProps {
 
 export function ExampleSuggestions({ onSelect }: ExampleSuggestionsProps) {
   return (
-    <div className="mb-12">
+    <div className="mb-8">
       <p className="text-sm font-semibold text-muted-foreground mb-4 text-center uppercase tracking-wider">Try an example</p>
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+      <div className="flex flex-wrap justify-center gap-2">
         {EXAMPLES.map((ex, i) => (
           <motion.button
             key={ex.title}
@@ -36,10 +36,10 @@ export function ExampleSuggestions({ onSelect }: ExampleSuggestionsProps) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: i * 0.05 }}
             onClick={() => onSelect(ex)}
-            className="flex flex-col items-center p-3 rounded-2xl bg-card border border-border hover:border-primary/50 hover:bg-accent/50 transition-all group"
+            className="flex items-center gap-2 px-4 py-2 rounded-full bg-card border border-border hover:border-primary/50 hover:bg-accent/50 transition-all group"
           >
-            <span className="text-2xl mb-2 group-hover:scale-125 transition-transform">{ex.emoji}</span>
-            <span className="text-[10px] font-bold text-center leading-tight uppercase opacity-70 group-hover:opacity-100">{ex.title}</span>
+            <span className="text-lg group-hover:scale-125 transition-transform">{ex.emoji}</span>
+            <span className="text-xs font-bold whitespace-nowrap uppercase opacity-70 group-hover:opacity-100">{ex.title}</span>
           </motion.button>
         ))}
       </div>
